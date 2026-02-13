@@ -1,0 +1,20 @@
+services:
+    dev-triton-server:
+        image: dev-triton-server:latest
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: Triton-Container
+        restart: always
+        tty: true
+        stdin_open: true
+        ports:
+            - '8100:8000' # Triton HTTP port
+        volumes:
+            - /home/tritonetst:/repository
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - capabilities: [gpu]
+        runtime: nvidia
